@@ -36,6 +36,15 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun logout(): Boolean {
+        return try {
+            firebaseAuthDataSource.signOut()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     override fun currentAuthState(): AuthState {
         val currentUser = firebaseAuthDataSource.currentUser
 
