@@ -1,6 +1,17 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+
+    // Serialization
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+
+    // DI
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+
+    // Firebase
+    alias(libs.plugins.gms.google.services)
+    alias(libs.plugins.crashlytics)
 }
 
 android {
@@ -52,6 +63,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
 
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -61,6 +73,27 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    // Navigation
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.core)
+
+    // DI
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.lifecycle.viewmodel.compose)
+    ksp(libs.hilt.android.compiler)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+
     // Connect UI Kit
     implementation(project(":ui"))
+    // Domain
+    implementation(project(":domain"))
+    // Data
+    implementation(project(":data"))
 }
