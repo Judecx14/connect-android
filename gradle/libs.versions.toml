@@ -60,6 +60,7 @@ javax-inject = { module = "javax.inject:javax.inject", version.ref = "javax" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-authentication = { module = "com.google.firebase:firebase-auth" }
 
 
 # ========================================= Plugins ==========================================

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,13 +21,24 @@ import dev.fenix.ui.component.button.type.Variant
 import dev.fenix.ui.component.icon.ConnectIcon
 import dev.fenix.ui.component.icon.type.ConnectIcons
 import dev.fenix.ui.theme.ConnectTheme
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun SignUpScreen(
     signUpViewModel: SignUpViewModel = hiltViewModel(),
-    navigateToBack: () -> Unit
+    navigateToBack: () -> Unit,
+    navigateToHome: () -> Unit,
 ) {
-    val formState by signUpViewModel.formState.collectAsStateWithLifecycle()
+    val uiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = true) {
+        signUpViewModel.effects.collectLatest { effect ->
+            when (effect) {
+                SignUpEffect.Error -> navigateToBack()
+                SignUpEffect.NavigateToHome -> navigateToHome()
+            }
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -50,7 +62,9 @@ fun SignUpScreen(
         ) {
             Header()
             Form(
-                state = formState,
+                email = uiState.email,
+                password = uiState.password,
+                isLoading = uiState.isLoading,
                 onEmailChange = signUpViewModel::onEmailChange,
                 onPasswordChange = signUpViewModel::onPasswordChange,
                 onSubmit = signUpViewModel::onSubmit
@@ -63,6 +77,9 @@ fun SignUpScreen(
 @Composable
 private fun SignUpScreenPreview() {
     ConnectTheme {
-        SignUpScreen { }
+        SignUpScreen(
+            navigateToBack = {},
+            navigateToHome = {}
+        )
     }
 }

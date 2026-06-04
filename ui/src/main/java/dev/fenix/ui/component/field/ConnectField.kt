@@ -22,6 +22,7 @@ fun ConnectField(
     value: String,
     label: String? = null,
     placeholder: String? = null,
+    enabled: Boolean = true,
     leading: @Composable ((color: Color) -> Unit)? = null,
     trailing: @Composable ((color: Color) -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -79,7 +80,10 @@ fun ConnectField(
                     shape = ConnectTheme.shapes.medium,
                     colors = colors
                 )
-            })
+            },
+
+            enabled = enabled,
+        )
     }
 }
 

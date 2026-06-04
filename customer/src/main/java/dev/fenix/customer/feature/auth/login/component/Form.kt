@@ -9,7 +9,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import dev.fenix.customer.R
-import dev.fenix.customer.feature.auth.login.FormState
 import dev.fenix.ui.component.button.ConnectButton
 import dev.fenix.ui.component.field.ConnectField
 import dev.fenix.ui.theme.ConnectTheme
@@ -17,7 +16,9 @@ import dev.fenix.ui.theme.ConnectTheme
 @Composable
 fun Form(
     modifier: Modifier = Modifier,
-    state: FormState,
+    email: String,
+    password: String,
+    isLoading: Boolean = false,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onSubmit: () -> Unit
@@ -28,23 +29,26 @@ fun Form(
         verticalArrangement = Arrangement.spacedBy(ConnectTheme.dimensions.spacing.medium)
     ) {
         ConnectField(
-            value = state.email,
+            value = email,
             onChange = onEmailChange,
             label = stringResource(R.string.login_screen_form_field_label_email),
-            placeholder = stringResource(R.string.login_screen_form_field_placeholder_email)
+            placeholder = stringResource(R.string.login_screen_form_field_placeholder_email),
+            enabled = !isLoading,
         )
 
         ConnectField(
-            value = state.password,
+            value = password,
             onChange = onPasswordChange,
             label = stringResource(R.string.login_screen_form_field_label_password),
             placeholder = stringResource(R.string.login_screen_form_field_placeholder_password),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            enabled = !isLoading,
         )
 
         ConnectButton(
             onClick = onSubmit,
-            label = stringResource(R.string.login_screen_form_button_login)
+            label = stringResource(R.string.login_screen_form_button_login),
+            enabled = !isLoading,
         )
     }
 }
@@ -52,13 +56,11 @@ fun Form(
 
 @Preview(showBackground = true)
 @Composable
-private fun AuthByPreview(){
+private fun AuthByPreview() {
     ConnectTheme {
         Form(
-            state = FormState(
-                email = "",
-                password = ""
-            ),
+            email = "",
+            password = "",
             onEmailChange = {},
             onPasswordChange = {},
             onSubmit = {}

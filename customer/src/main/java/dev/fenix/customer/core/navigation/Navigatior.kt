@@ -36,7 +36,10 @@ fun Navigator() {
             }
 
             entry<SignUp> {
-                SignUpScreen { backStack.back() }
+                SignUpScreen(
+                    navigateToBack = { backStack.back() },
+                    navigateToHome = { backStack.navigateTo(screen = Home) }
+                )
             }
 
             entry<Home> {

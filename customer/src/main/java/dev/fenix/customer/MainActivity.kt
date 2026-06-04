@@ -10,13 +10,18 @@ import dev.fenix.ui.theme.ConnectTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private fun setupUi()  {
         enableEdgeToEdge()
         setContent {
             ConnectTheme {
                 Navigator()
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setupUi()
     }
 }

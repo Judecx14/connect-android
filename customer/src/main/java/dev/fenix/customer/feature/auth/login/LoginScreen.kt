@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +19,7 @@ import dev.fenix.customer.feature.auth.login.component.SignUpFooter
 import dev.fenix.ui.theme.ConnectTheme
 import dev.fenix.ui.modifier.ambient_glow.ambientGlow
 import dev.fenix.ui.modifier.ambient_glow.model.Position
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun LoginScreen(
@@ -26,8 +28,16 @@ fun LoginScreen(
     navigateToHome: () -> Unit
 ) {
     val primary = ConnectTheme.colors.primary
+    val uiState by loginViewModel.uiState.collectAsStateWithLifecycle()
 
-    val formState by loginViewModel.formState.collectAsStateWithLifecycle()
+    LaunchedEffect(Unit) {
+        loginViewModel.effects.collectLatest { effect ->
+            when (effect) {
+                LoginUiEffect.Error -> {}
+                LoginUiEffect.Success -> navigateToHome()
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier.ambientGlow(
@@ -51,10 +61,12 @@ fun LoginScreen(
             )
 
             Form(
-                state = formState,
+                email = uiState.email,
+                password = uiState.password,
+                isLoading = uiState.isLoading,
                 onEmailChange = loginViewModel::onEmailChange,
                 onPasswordChange = loginViewModel::onPasswordChange,
-                onSubmit = navigateToHome
+                onSubmit = loginViewModel::onSubmit
             )
 
             AuthBy()

@@ -4,6 +4,9 @@ plugins {
     // DI
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+
+    // Firebase
+    alias(libs.plugins.gms.google.services)
 }
 
 android {
@@ -39,6 +42,10 @@ dependencies {
     // DI
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.authentication)
 
     // domain
     implementation(project(":domain"))
