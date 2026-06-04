@@ -1,5 +1,6 @@
 package com.fenix.data.repository.auth
 
+import com.fenix.domain.model.auth.AuthState
 import com.fenix.domain.model.auth.Credentials
 import com.fenix.domain.repository.auth.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +33,16 @@ class AuthRepositoryImpl @Inject constructor(
             result != null
         } catch (e: Exception) {
             false
+        }
+    }
+
+    override fun currentAuthState(): AuthState {
+        val currentUser = firebaseAuthDataSource.currentUser
+
+        return if (currentUser != null) {
+            AuthState.Authenticated
+        } else {
+            AuthState.Unauthenticated
         }
     }
 }
