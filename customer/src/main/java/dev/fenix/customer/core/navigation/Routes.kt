@@ -8,11 +8,9 @@ sealed class Route : NavKey {
     data object Login : Route()
 
     @Serializable
-    data class SignUp(val id: String) : Route()
+    data object SignUp : Route()
 
     @Serializable
     data object Home: Route()
 
-    @Serializable
-    data object Error : Route()
 }

@@ -1,6 +1,5 @@
 package dev.fenix.customer.core.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -12,26 +11,22 @@ import dev.fenix.customer.core.navigation.Route.*
 import dev.fenix.customer.feature.home.HomeScreen
 
 @Composable
-fun Navigator() {
-    val backStack = rememberNavBackStack(Login)
+fun Navigator(
+    startRoute: Route
+) {
+    val backStack = rememberNavBackStack(startRoute)
 
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.back() },
-        transitionSpec = {
-            ConnectTransition.slideRight
-        },
-        popTransitionSpec = {
-            ConnectTransition.slideLeft
-        },
-        predictivePopTransitionSpec = {
-            ConnectTransition.slideLeft
-        },
+        transitionSpec = { ConnectTransition.slideRight },
+        popTransitionSpec = { ConnectTransition.slideLeft },
+        predictivePopTransitionSpec = { ConnectTransition.slideLeft },
         entryProvider = entryProvider {
             entry<Login> {
                 LoginScreen(
                     navigateToHome = { backStack.navigateTo(screen = Home) },
-                    navigateToSignUp = { backStack.navigateTo(screen = SignUp("1")) }
+                    navigateToSignUp = { backStack.navigateTo(screen = SignUp) }
                 )
             }
 
@@ -43,10 +38,12 @@ fun Navigator() {
             }
 
             entry<Home> {
-                HomeScreen()
+                HomeScreen(
+                    navigateToLogin = {
+                        backStack.resetAndStartFrom(screen = Login)
+                    }
+                )
             }
-
-            entry<Error> { Text("Error") }
         }
     )
 }
