@@ -2,41 +2,29 @@ package dev.fenix.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
+import dev.fenix.ui.theme.provider.LocalDimen
+import dev.fenix.ui.theme.provider.ProvideDimension
+import dev.fenix.ui.theme.token.color_scheme.DarkColorScheme
+import dev.fenix.ui.theme.token.color_scheme.LightColorScheme
+import dev.fenix.ui.theme.token.dimension.DimensionSuite
+import dev.fenix.ui.theme.token.dimension.Dimensions
+import dev.fenix.ui.theme.token.dimension.suiteFor
+import dev.fenix.ui.theme.token.font.Typography
+import dev.fenix.ui.theme.token.shapes
 
 @Composable
 fun ConnectTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = false, // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -49,9 +37,46 @@ fun ConnectTheme(
         else -> LightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    val screenSize = LocalWindowInfo.current.containerSize
+
+    val screenWidth: Int
+
+    with(LocalDensity.current) {
+        screenWidth = screenSize.width.toDp().value.toInt()
+    }
+
+    val suite = Dimensions.suiteFor(screenWidth)
+
+    ProvideDimension(suite) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            shapes = shapes,
+            content = content
+        )
+    }
+}
+
+
+object ConnectTheme {
+    val colors: ColorScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.colorScheme
+
+    val dimensions: DimensionSuite
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalDimen.current
+
+
+    val typography
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.typography
+
+    val shapes
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.shapes
 }

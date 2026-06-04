@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Customer</string>
+
+    <!-- Login Screen -->
+    <string name="login_screen_greeting_tag">Cliente</string>
+    <string name="login_screen_greeting_for">Para</string>
+    <string name="login_screen_greeting_title">Bienvenido a Connect</string>
+    <string name="login_screen_greeting_description">Ingresa tus credenciales para acceder a la aplicaicon o usa un metodo de autenticacion.</string>
+    <string name="login_screen_form_field_label_email">Correo electronico</string>
+    <string name="login_screen_form_field_placeholder_email">Escribe tu correo electronico</string>
+    <string name="login_screen_form_field_label_password">Contrasena</string>
+    <string name="login_screen_form_field_placeholder_password">Escribe tu contrasena</string>
+    <string name="login_screen_form_button_login">Iniciar sesion</string>
+    <string name="login_screen_form_signup_footer_button">Registrarse</string>
+    <string name="login_screen_form_signup_footer_question">¿No tienes cuenta?</string>
+
+    <!-- SignUp Screen -->
+    <string name="signup_screen_top_bar_title">Crear una cuenta</string>
+    <string name="signup_screen_header_title">Únete</string>
+    <string name="signup_screen_header_description">Únete a nosotros para gestionar tus pedidos, guardar tus favoritos y disfrutar de una experiencia a tu medida.</string>
+    <string name="signup_screen_form_field_label_email">Correo electronico</string>
+    <string name="signup_screen_form_field_placeholder_email">Escribe tu correo electronico</string>
+    <string name="signup_screen_form_field_label_password">Contrasena</string>
+    <string name="signup_screen_form_field_placeholder_password">Escribe tu contrasena</string>
+    <string name="signup_screen_form_button_signup">Registrarse</string>
 </resources>

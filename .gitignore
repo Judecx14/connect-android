@@ -1,15 +1,24 @@
+# Compilation object
+build/
+.gradle/
+
+# Android Studio / IntelliJ settings
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+*.ipr
+*.iws
+
+# Local properties
 local.properties
+
+# SO Files
+.DS_Store
+Thumbs.db
+
+# Screenshots and profiles
+/captures/
+.externalNativeBuild/
+.cxx/
+
+# Credentials
+**/google-services.json
