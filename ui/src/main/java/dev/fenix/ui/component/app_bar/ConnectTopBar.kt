@@ -3,6 +3,7 @@ package dev.fenix.ui.component.app_bar
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
@@ -27,7 +28,8 @@ fun ConnectTopBar(
         modifier = modifier
             .statusBarsPadding()
             .padding(ConnectTheme.dimensions.padding.normal)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .height(ConnectTheme.dimensions.height.normal),
         contentAlignment = Alignment.Center
     ) {
         leading?.let { component ->

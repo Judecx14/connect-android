@@ -8,7 +8,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.fenix.ui.component.icon.type.ConnectIcons
-import dev.fenix.ui.theme.ConnectTheme
 
 @Composable
 fun ConnectIcon(

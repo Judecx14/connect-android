@@ -8,4 +8,6 @@ interface Suite<T> {
     val icon: T
     val button: T
     val border: T
+    val height: T
+    val width: T
 }

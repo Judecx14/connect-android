@@ -29,14 +29,14 @@ private fun Content(
     onSubmit: () -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
-    val primary = ConnectTheme.colors.primary
+    val colorPrimary = ConnectTheme.colors.primary
 
     Scaffold(
         modifier = Modifier.ambientGlow(
             background = ConnectTheme.colors.background
         ) {
             spot(
-                color = primary,
+                color = colorPrimary,
                 x = Position.End,
                 y = Position.Start,
                 ratio = 0.8f,
