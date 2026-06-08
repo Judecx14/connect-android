@@ -40,7 +40,7 @@ fun Navigator(
             entry<Home> {
                 HomeScreen(
                     navigateToLogin = {
-                        backStack.resetAndStartFrom(screen = Login)
+                        backStack.resetTo(screen = Login)
                     }
                 )
             }
