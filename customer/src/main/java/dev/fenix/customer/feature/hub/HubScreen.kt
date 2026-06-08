@@ -1,4 +1,4 @@
-package dev.fenix.customer.feature.home
+package dev.fenix.customer.feature.hub
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,19 +15,9 @@ import dev.fenix.ui.theme.ConnectTheme
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun HomeScreen(
-    homeViewModel: HomeViewModel = hiltViewModel(),
-    navigateToLogin: () -> Unit
+private fun Content(
+    logout: () -> Unit,
 ) {
-    LaunchedEffect(Unit) { 
-        homeViewModel.effects.collectLatest { effect -> 
-            when (effect) {
-                HomeUiEffect.FailureLogout -> { }
-                HomeUiEffect.SuccessLogout -> navigateToLogin()
-            }
-        }
-    }
-
     Scaffold { innerPadding ->
         Box(
             modifier = Modifier
@@ -37,18 +27,36 @@ fun HomeScreen(
         ) {
             ConnectButton(
                 label = "Logout",
-                onClick = homeViewModel::onLogout
+                onClick = logout
             )
         }
     }
 }
 
+
+@Composable
+fun HubScreen(
+    hubViewModel: HubViewModel = hiltViewModel(),
+    navigateToLogin: () -> Unit,
+) {
+    LaunchedEffect(Unit) {
+        hubViewModel.effects.collectLatest { effect ->
+            when (effect) {
+                HomeUiEffect.FailureLogout -> {}
+                HomeUiEffect.SuccessLogout -> navigateToLogin()
+            }
+        }
+    }
+
+    Content(logout = hubViewModel::doLogout)
+}
+
 @Preview
 @Composable
-private fun HomeScreenPreview() {
+private fun HubScreenPreview() {
     ConnectTheme {
-        HomeScreen(
-            navigateToLogin = {}
+        Content(
+             logout = {}
         )
     }
 

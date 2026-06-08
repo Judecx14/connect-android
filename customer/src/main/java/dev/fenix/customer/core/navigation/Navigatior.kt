@@ -8,7 +8,7 @@ import dev.fenix.customer.feature.auth.login.LoginScreen
 import dev.fenix.customer.feature.auth.signup.SignUpScreen
 import dev.fenix.ui.transition.ConnectTransition
 import dev.fenix.customer.core.navigation.Route.*
-import dev.fenix.customer.feature.home.HomeScreen
+import dev.fenix.customer.feature.hub.HubScreen
 
 @Composable
 fun Navigator(
@@ -38,7 +38,7 @@ fun Navigator(
             }
 
             entry<Home> {
-                HomeScreen(
+                HubScreen(
                     navigateToLogin = {
                         backStack.resetTo(screen = Login)
                     }

@@ -1,4 +1,4 @@
-package dev.fenix.customer.feature.home
+package dev.fenix.customer.feature.hub
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,13 +15,13 @@ sealed class HomeUiEffect {
 }
 
 @HiltViewModel
-class HomeViewModel  @Inject constructor(
-    val logout: Logout
+class HubViewModel  @Inject constructor(
+   private val logout: Logout
 ) : ViewModel() {
     private val _effects = Channel<HomeUiEffect>(Channel.BUFFERED)
     val effects = _effects.receiveAsFlow()
 
-    fun onLogout() {
+    fun doLogout() {
         viewModelScope.launch {
            val result = logout()
 

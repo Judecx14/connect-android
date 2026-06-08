@@ -22,22 +22,14 @@ import dev.fenix.ui.modifier.ambient_glow.model.Position
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun LoginScreen(
-    loginViewModel: LoginViewModel = hiltViewModel(),
+private fun Content(
+    uiState: LoginUiState,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onSubmit: () -> Unit,
     navigateToSignUp: () -> Unit,
-    navigateToHome: () -> Unit
 ) {
     val primary = ConnectTheme.colors.primary
-    val uiState by loginViewModel.uiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(Unit) {
-        loginViewModel.effects.collectLatest { effect ->
-            when (effect) {
-                LoginUiEffect.Error -> {}
-                LoginUiEffect.Success -> navigateToHome()
-            }
-        }
-    }
 
     Scaffold(
         modifier = Modifier.ambientGlow(
@@ -64,9 +56,9 @@ fun LoginScreen(
                 email = uiState.email,
                 password = uiState.password,
                 isLoading = uiState.isLoading,
-                onEmailChange = loginViewModel::onEmailChange,
-                onPasswordChange = loginViewModel::onPasswordChange,
-                onSubmit = loginViewModel::onSubmit
+                onEmailChange = onEmailChange,
+                onPasswordChange = onPasswordChange,
+                onSubmit = onSubmit
             )
 
             AuthBy()
@@ -76,13 +68,44 @@ fun LoginScreen(
     }
 }
 
+
+@Composable
+fun LoginScreen(
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    navigateToSignUp: () -> Unit,
+    navigateToHome: () -> Unit
+) {
+    val uiState by loginViewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        loginViewModel.effects.collectLatest { effect ->
+            when (effect) {
+                LoginUiEffect.Error -> {}
+                LoginUiEffect.Success -> navigateToHome()
+            }
+        }
+    }
+
+    Content(
+        uiState = uiState,
+        onEmailChange = loginViewModel::onEmailChange,
+        onPasswordChange = loginViewModel::onPasswordChange,
+        onSubmit = loginViewModel::onSubmit,
+        navigateToSignUp = navigateToSignUp
+    )
+
+}
+
 @Preview
 @Composable
 private fun LoginScreenPreview() {
     ConnectTheme {
-        LoginScreen(
-            navigateToSignUp = { },
-            navigateToHome = {}
+        Content(
+            uiState = LoginUiState(),
+            onEmailChange = { },
+            onPasswordChange = { },
+            onSubmit = { },
+            navigateToSignUp = { }
         )
     }
 }

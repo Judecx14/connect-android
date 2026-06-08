@@ -24,22 +24,13 @@ import dev.fenix.ui.theme.ConnectTheme
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun SignUpScreen(
-    signUpViewModel: SignUpViewModel = hiltViewModel(),
-    navigateToBack: () -> Unit,
-    navigateToHome: () -> Unit,
+private fun Content(
+    uiState: SignUiState,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onSubmit: () -> Unit,
+    navigateToBack: () -> Unit
 ) {
-    val uiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = true) {
-        signUpViewModel.effects.collectLatest { effect ->
-            when (effect) {
-                SignUpEffect.Error -> navigateToBack()
-                SignUpEffect.NavigateToHome -> navigateToHome()
-            }
-        }
-    }
-
     Scaffold(
         topBar = {
             ConnectTopBar(
@@ -65,21 +56,51 @@ fun SignUpScreen(
                 email = uiState.email,
                 password = uiState.password,
                 isLoading = uiState.isLoading,
-                onEmailChange = signUpViewModel::onEmailChange,
-                onPasswordChange = signUpViewModel::onPasswordChange,
-                onSubmit = signUpViewModel::onSubmit
+                onEmailChange = onEmailChange,
+                onPasswordChange = onPasswordChange,
+                onSubmit = onSubmit
             )
         }
     }
+}
+
+@Composable
+fun SignUpScreen(
+    signUpViewModel: SignUpViewModel = hiltViewModel(),
+    navigateToBack: () -> Unit,
+    navigateToHome: () -> Unit,
+) {
+    val uiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = true) {
+        signUpViewModel.effects.collectLatest { effect ->
+            when (effect) {
+                SignUpEffect.Error -> navigateToBack()
+                SignUpEffect.NavigateToHome -> navigateToHome()
+            }
+        }
+    }
+
+    Content(
+        uiState = uiState,
+        onEmailChange = signUpViewModel::onEmailChange,
+        onPasswordChange = signUpViewModel::onPasswordChange,
+        onSubmit = signUpViewModel::onSubmit,
+        navigateToBack = navigateToBack
+    )
+
 }
 
 @Preview
 @Composable
 private fun SignUpScreenPreview() {
     ConnectTheme {
-        SignUpScreen(
+        Content(
+            uiState = SignUiState(),
             navigateToBack = {},
-            navigateToHome = {}
+            onEmailChange = {},
+            onPasswordChange = {},
+            onSubmit = {}
         )
     }
 }
