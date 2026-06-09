@@ -1,12 +1,10 @@
 package dev.fenix.customer.feature.hub
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.LargeFloatingActionButton
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import dev.fenix.ui.component.app_bar.ConnectTopBar
+import dev.fenix.ui.component.app_bar.navigation_bar.ConnectNavigationBar
 import dev.fenix.ui.component.button.ConnectIconButton
 import dev.fenix.ui.component.button.type.Variant
 import dev.fenix.ui.component.icon.ConnectIcon
@@ -25,50 +24,69 @@ import dev.fenix.ui.component.text.type.ConnectTextStyle
 import dev.fenix.ui.modifier.ambient_glow.ambientGlow
 import dev.fenix.ui.modifier.ambient_glow.model.Position
 import dev.fenix.ui.theme.ConnectTheme
+import dev.fenix.ui.theme.token.color_scheme.Colors
 import kotlinx.coroutines.flow.collectLatest
 
+
 @Composable
-fun UserInformation() {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(
-            ConnectTheme.dimensions.spacing.small
-        )
-    ) {
-        ConnectIconButton(
-            onClick = {}
-        ) {
-            ConnectIcon(icon = ConnectIcons.UserRounded)
-        }
+private fun TopBar() {
+    val contentColor = Colors.Dark.onSurface
 
-        Column(
-            verticalArrangement = Arrangement.spacedBy(
-                ConnectTheme.dimensions.spacing.xs
-            ),
-        ) {
-            ConnectText(
-                text = "User name",
-                style = ConnectTextStyle.Label,
-                color = ConnectTheme.colors.inverseOnSurface
-            )
-
+    ConnectTopBar(
+        leading = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(ConnectTheme.dimensions.spacing.xs)
+                horizontalArrangement = Arrangement.spacedBy(
+                    ConnectTheme.dimensions.spacing.small
+                )
+            ) {
+                ConnectIconButton(
+                    onClick = {}
+                ) {
+                    ConnectIcon(icon = ConnectIcons.UserRounded, tint = contentColor)
+                }
+
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(
+                        ConnectTheme.dimensions.spacing.xs
+                    ),
+                ) {
+                    ConnectText(
+                        text = "User name",
+                        style = ConnectTextStyle.Label,
+                        color = contentColor
+                    )
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(ConnectTheme.dimensions.spacing.xs)
+                    ) {
+                        ConnectIcon(
+                            icon = ConnectIcons.Locate,
+                            modifier = Modifier.size(ConnectTheme.dimensions.icon.medium),
+                            tint = contentColor
+                        )
+
+                        ConnectText(
+                            text = "Current location",
+                            color = contentColor
+                        )
+                    }
+                }
+            }
+        },
+        trailing = {
+            ConnectIconButton(
+                variant = Variant.Ghost,
+                onClick = {}
             ) {
                 ConnectIcon(
-                    icon = ConnectIcons.Locate,
-                    modifier = Modifier.size(ConnectTheme.dimensions.icon.medium),
-                    tint = ConnectTheme.colors.inverseOnSurface
-                )
-
-                ConnectText(
-                    text = "Current location",
-                    color = ConnectTheme.colors.inverseOnSurface
+                    icon = ConnectIcons.Bell,
+                    tint = contentColor
                 )
             }
         }
-    }
+    )
 }
 
 @Composable
@@ -78,76 +96,53 @@ private fun Content(
     val colorPrimary = ConnectTheme.colors.primary
 
     Scaffold(
+        modifier = Modifier
+            .ambientGlow(background = ConnectTheme.colors.background) {
+                spot(
+                    color = colorPrimary,
+                    x = Position.Start,
+                    y = Position.Start,
+                    ratio = 1.25f
+                )
+
+                spot(
+                    color = colorPrimary,
+                    x = Position.End,
+                    y = Position.Start,
+                    ratio = 0.65f
+                )
+            },
         containerColor = Color.Transparent,
-        modifier = Modifier.ambientGlow(
-            background = ConnectTheme.colors.background,
-        ) {
-            spot(
-                color = colorPrimary,
-                x = Position.Center,
-                y = Position.Start,
-                ratio = 1.75f
-            )
-        },
-        topBar = {
-            ConnectTopBar(
-                leading = {
-                    UserInformation()
-                },
-                trailing = {
-                    ConnectIconButton(
-                        variant = Variant.Ghost,
-                        onClick = {}
-                    ) {
-                        ConnectIcon(
-                            icon = ConnectIcons.Bell,
-                            tint = ConnectTheme.colors.inverseOnSurface
-                        )
-                    }
-                }
-            )
-        },
-        // TODO Extract to ui library
+        topBar = { TopBar() },
         bottomBar = {
-            BottomAppBar {
-                NavigationBarItem(
+            ConnectNavigationBar {
+                item(
+                    label = "Home",
+                    icon = ConnectIcons.House,
                     selected = true,
-                    onClick = { },
-                    icon = { ConnectIcon(icon = ConnectIcons.House) },
-                    label = {
-                        ConnectText(text = "Home")
-                    }
+                    showLabel = true,
+                    onClick = {}
                 )
 
-                NavigationBarItem(
+                item(
+                    label = "Requests",
+                    icon = ConnectIcons.ListRestart,
                     selected = false,
-                    onClick = { },
-                    icon = { ConnectIcon(icon = ConnectIcons.ListRestart) },
-                    label = {
-                        ConnectText(text = "Requests")
-                    }
+                    showLabel = false,
+                    onClick = {}
                 )
 
-                NavigationBarItem(
+                item(
+                    label = "Settings",
+                    icon = ConnectIcons.Bolt,
                     selected = false,
-                    onClick = { },
-                    icon = { ConnectIcon(icon = ConnectIcons.Bolt) },
-                    label = {
-                        ConnectText(text = "Settings")
-                    }
+                    showLabel = false,
+                    onClick = {}
                 )
             }
         },
-        floatingActionButton = {
-            LargeFloatingActionButton(
-                onClick = logout
-            ) {
-                ConnectIcon(icon = ConnectIcons.Logout)
-            }
-        }
-
     ) { _ ->
-
+        ConnectText(text = "")
     }
 }
 
@@ -168,7 +163,7 @@ fun HubScreen(
     Content(logout = hubViewModel::doLogout)
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 private fun HubScreenPreview() {
     ConnectTheme {

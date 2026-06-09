@@ -2,6 +2,7 @@ package dev.fenix.ui.component.text
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,7 +18,7 @@ fun ConnectText(
     modifier: Modifier = Modifier,
     text: String,
     style: ConnectTextStyle = ConnectTextStyle.Body,
-    color: Color = ConnectTheme.colors.onSurface,
+    color: Color = LocalContentColor.current,
     align: TextAlign = TextAlign.Start,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLines: Int = Int.MAX_VALUE,

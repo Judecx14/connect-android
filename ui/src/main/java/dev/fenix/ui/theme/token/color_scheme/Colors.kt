@@ -21,7 +21,7 @@ object Colors {
         val errorContainer = Color(0xFFFFDAD6)
         val onError = Color(0xFFFFFFFF)
         val onErrorContainer = Color(0xFF93000A)
-        val background = Color(0xFFFFF8F7)
+        val background = Color(0xFFEFEFEF)
         val onBackground = Color(0xFF281719)
         val surface = Color(0xFFFFF8F7)
         val onSurface = Color(0xFF281719)
@@ -37,7 +37,7 @@ object Colors {
     }
 
     object Dark {
-        val primary = Color(0xFFFFB2BC)
+        val primary = Color(0xFF96424D)
         val onPrimary = Color(0xFF670022)
         val primaryContainer = Color(0xFFFF4F77)
         val onPrimaryContainer = Color(0xFF3A0010)

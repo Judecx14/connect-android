@@ -29,6 +29,7 @@ data class CompactSuite(
     override val height: Measurement = Measurement(
         normal = 56.dp
     ),
-    override val width: Measurement = Measurement()
+    override val width: Measurement = Measurement(),
+    override val elevation: Measurement = Measurement()
 ) : DimensionSuite
 

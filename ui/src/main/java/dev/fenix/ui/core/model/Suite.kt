@@ -10,4 +10,5 @@ interface Suite<T> {
     val border: T
     val height: T
     val width: T
+    val elevation: T
 }
