@@ -18,7 +18,7 @@ fun ConnectText(
     modifier: Modifier = Modifier,
     text: String,
     style: ConnectTextStyle = ConnectTextStyle.Body,
-    color: Color = LocalContentColor.current,
+    color: Color = ConnectTheme.colors.onSurface,
     align: TextAlign = TextAlign.Start,
     overflow: TextOverflow = TextOverflow.Ellipsis,
     maxLines: Int = Int.MAX_VALUE,

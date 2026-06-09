@@ -39,7 +39,7 @@ fun ConnectNavigationBar(
     ) {
         scope.items.forEach { item ->
             NavigationBarItem(
-                label = { ConnectText(text = item.label) },
+                label = { ConnectText(text = item.label, color = ConnectTheme.colors.primary) },
                 icon = { ConnectIcon(icon = item.icon) },
                 alwaysShowLabel = item.selected,
                 selected = item.selected,

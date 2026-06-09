@@ -11,4 +11,7 @@ sealed class ConnectIcons(val resId: Int) {
     object House : ConnectIcons(R.drawable.ic_house)
     object ListRestart : ConnectIcons(R.drawable.ic_list_restart)
     object Logout : ConnectIcons(R.drawable.ic_log_out)
+    object Zap : ConnectIcons(R.drawable.ic_zap)
+    object Store : ConnectIcons(R.drawable.ic_store)
+    object StickyNotePlus : ConnectIcons(R.drawable.ic_sticky_note_plus)
 }

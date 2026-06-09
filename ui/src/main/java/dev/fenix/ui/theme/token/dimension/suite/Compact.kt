@@ -12,7 +12,8 @@ data class CompactSuite(
     override val spacing: Measurement = Measurement(),
     override val margin: Measurement = Measurement(),
     override val icon: Measurement = Measurement(
-        medium = 16.dp
+        medium = 16.dp,
+        xxl  = 64.dp
     ),
     override val button: Measurement = Measurement(
         xs = 12.dp,
@@ -27,9 +28,13 @@ data class CompactSuite(
         xs = 1.dp
     ),
     override val height: Measurement = Measurement(
-        normal = 56.dp
+        normal = 56.dp,
+        medium = 64.dp,
+        large = 128.dp
     ),
     override val width: Measurement = Measurement(),
-    override val elevation: Measurement = Measurement()
+    override val elevation: Measurement = Measurement(
+        xs = 0.5.dp
+    )
 ) : DimensionSuite
 
