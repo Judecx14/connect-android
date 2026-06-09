@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fenix.customer.feature.hub.component.BottomBar
 import dev.fenix.customer.feature.hub.component.Categories
 import dev.fenix.customer.feature.hub.component.Orders
@@ -22,6 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 private fun Content(
+    currentLocation: String,
     logout: () -> Unit,
 ) {
     val colorPrimary = ConnectTheme.colors.primary
@@ -44,7 +47,7 @@ private fun Content(
                 )
             },
         containerColor = Color.Transparent,
-        topBar = { TopBar(logout = logout) },
+        topBar = { TopBar(currentLocation = currentLocation, logout = logout) },
         bottomBar = { BottomBar() },
     ) { innerPadding ->
         Column(
@@ -64,6 +67,8 @@ fun HubScreen(
     hubViewModel: HubViewModel = hiltViewModel(),
     navigateToLogin: () -> Unit,
 ) {
+    val currentLocation by hubViewModel.location.collectAsStateWithLifecycle()
+
     LaunchedEffect(Unit) {
         hubViewModel.effects.collectLatest { effect ->
             when (effect) {
@@ -73,7 +78,10 @@ fun HubScreen(
         }
     }
 
-    Content(logout = hubViewModel::doLogout)
+    Content(
+        currentLocation = currentLocation,
+        logout = hubViewModel::doLogout
+    )
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
@@ -81,6 +89,7 @@ fun HubScreen(
 private fun HubScreenPreviewLight() {
     ConnectTheme {
         Content(
+            currentLocation = "Street #123 Boulevard Example between",
             logout = {}
         )
     }
@@ -91,6 +100,7 @@ private fun HubScreenPreviewLight() {
 private fun HubScreenPreviewNight() {
     ConnectTheme {
         Content(
+            currentLocation = "Street #123 Boulevard Example between",
             logout = {}
         )
     }

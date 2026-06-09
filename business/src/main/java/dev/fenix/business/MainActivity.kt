@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import dev.fenix.ui.theme.ConnectTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
