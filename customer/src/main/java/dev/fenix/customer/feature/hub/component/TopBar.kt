@@ -19,7 +19,9 @@ import dev.fenix.ui.theme.ConnectTheme
 import dev.fenix.ui.theme.token.color_scheme.Colors
 
 @Composable
-fun TopBar() {
+fun TopBar(
+    logout: () -> Unit
+) {
     val contentColor = Colors.Dark.onSurface
 
     ConnectTopBar(
@@ -68,10 +70,10 @@ fun TopBar() {
         trailing = {
             ConnectIconButton(
                 variant = Variant.Ghost,
-                onClick = {}
+                onClick = logout
             ) {
                 ConnectIcon(
-                    icon = ConnectIcons.Bell,
+                    icon = ConnectIcons.Logout,
                     tint = contentColor
                 )
             }
@@ -84,6 +86,6 @@ fun TopBar() {
 @Composable
 private fun TopBarPreview() {
     ConnectTheme {
-        TopBar()
+        TopBar(logout = { })
     }
 }

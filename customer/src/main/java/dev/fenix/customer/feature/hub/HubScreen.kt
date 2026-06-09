@@ -44,7 +44,7 @@ private fun Content(
                 )
             },
         containerColor = Color.Transparent,
-        topBar = { TopBar() },
+        topBar = { TopBar(logout = logout) },
         bottomBar = { BottomBar() },
     ) { innerPadding ->
         Column(
