@@ -91,6 +91,9 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.authentication)
 
+    // GMS Play services location
+    implementation(libs.play.services.location)
+
     // Connect UI Kit
     implementation(project(":ui"))
     // Domain

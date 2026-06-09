@@ -47,6 +47,9 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.authentication)
 
+    // GMS Play services location
+    implementation(libs.play.services.location)
+
     // domain
     implementation(project(":domain"))
 }
