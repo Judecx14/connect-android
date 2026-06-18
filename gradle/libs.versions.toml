@@ -22,6 +22,7 @@ gms-google = "4.4.4"
 firebaseBom = "34.14.0"
 firebaseCrashlytics = "3.0.7"
 gms-play-servicies-location = "21.3.0"
+retrofit = "3.0.0"
 
 # ========================================= Libraries ==========================================
 [libraries]
@@ -66,11 +67,16 @@ firebase-authentication = { module = "com.google.firebase:firebase-auth" }
 # Play services location
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref="gms-play-servicies-location" }
 
+# Retrofit2
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-converter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+
 # ========================================= Plugins ==========================================
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 # Core navigation
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
@@ -78,7 +84,6 @@ jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serializati
 # DI
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
 #Firebase
 gms-google-services = { id = "com.google.gms.google-services", version.ref = "gms-google" }

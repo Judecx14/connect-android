@@ -94,6 +94,10 @@ dependencies {
     // GMS Play services location
     implementation(libs.play.services.location)
 
+    // Retrofit2
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter)
+
     // Connect UI Kit
     implementation(project(":ui"))
     // Domain
