@@ -1,9 +1,8 @@
 package dev.fenix.customer.feature.hub
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fenix.domain.use_case.auth.CurrentLocation
+import com.fenix.domain.use_case.location.CurrentLocation
 import com.fenix.domain.use_case.auth.Logout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

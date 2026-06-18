@@ -3,7 +3,7 @@ package com.fenix.data.di.location
 import android.content.Context
 import android.location.Geocoder
 import com.fenix.data.repository.location.LocationRepositoryImpl
-import com.fenix.domain.repository.auth.LocationRepository
+import com.fenix.domain.repository.location.LocationRepository
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Binds

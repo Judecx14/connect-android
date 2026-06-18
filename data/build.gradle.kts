@@ -7,6 +7,9 @@ plugins {
 
     // Firebase
     alias(libs.plugins.gms.google.services)
+
+    // Serialization
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -49,6 +52,11 @@ dependencies {
 
     // GMS Play services location
     implementation(libs.play.services.location)
+
+    // Retrofit2
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter)
+    implementation(libs.kotlin.serialization.json)
 
     // domain
     implementation(project(":domain"))

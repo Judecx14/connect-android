@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
-import com.fenix.domain.repository.auth.LocationRepository
+import com.fenix.domain.repository.location.LocationRepository
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine

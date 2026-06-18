@@ -23,6 +23,7 @@ firebaseBom = "34.14.0"
 firebaseCrashlytics = "3.0.7"
 gms-play-servicies-location = "21.3.0"
 retrofit = "3.0.0"
+kotlin-serialization-json = "1.11.0"
 
 # ========================================= Libraries ==========================================
 [libraries]
@@ -70,6 +71,7 @@ play-services-location = { module = "com.google.android.gms:play-services-locati
 # Retrofit2
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-converter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 
 # ========================================= Plugins ==========================================
 [plugins]
