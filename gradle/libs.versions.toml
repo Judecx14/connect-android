@@ -25,6 +25,7 @@ gms-play-servicies-location = "21.3.0"
 retrofit = "3.0.0"
 kotlin-serialization-json = "1.11.0"
 androidx-annotation-experimental = "1.6.0"
+kotlinx-coroutines = "1.10.2"
 
 # ========================================= Libraries ==========================================
 [libraries]
@@ -76,6 +77,9 @@ kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializat
 
 # Serilization Error REMOVE
 androidx-annotation-experimental = { module = "androidx.annotation:annotation-experimental", version.ref = "androidx-annotation-experimental" }
+
+# Kotlin coroutines
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 
 
 # ========================================= Plugins ==========================================
