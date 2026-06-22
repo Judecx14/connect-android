@@ -16,29 +16,20 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LocationModule {
-
-    companion object {
-        @Provides
-        fun provideGeocoder(
-            @ApplicationContext context: Context
-        ): Geocoder {
-            return Geocoder(context)
-        }
-
-        @Provides
-        @Singleton
-        fun provideLocationClient(
-            @ApplicationContext context: Context,
-        ): FusedLocationProviderClient {
-            return LocationServices.getFusedLocationProviderClient(context)
-        }
-
-
+object LocationModule {
+    @Provides
+    fun provideGeocoder(
+        @ApplicationContext context: Context
+    ): Geocoder {
+        return Geocoder(context)
     }
 
-    @Binds
-    abstract fun bindLocationRepository(impl: LocationRepositoryImpl): LocationRepository
-
+    @Provides
+    @Singleton
+    fun provideLocationClient(
+        @ApplicationContext context: Context,
+    ): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(context)
+    }
 }
 

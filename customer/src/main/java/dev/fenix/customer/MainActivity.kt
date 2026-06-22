@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
     private fun setupUi() {
         enableEdgeToEdge()
         setContent {
-            ConnectTheme {
+            ConnectTheme(darkTheme = false) {
                 val authState by mainViewModel.authState.collectAsStateWithLifecycle()
 
                 when (authState) {

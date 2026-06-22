@@ -3,9 +3,10 @@ package dev.fenix.customer.feature.auth.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fenix.domain.model.auth.Credentials
+import com.fenix.domain.model.user.CreateUserProperties
 import com.fenix.domain.use_case.auth.SignUp
+import com.fenix.domain.use_case.user.CreateUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,9 +28,10 @@ data class SignUiState(
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    val signUp: SignUp
+    val signUp: SignUp,
+    val createUser: CreateUser
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<SignUiState>(SignUiState())
+    private val _uiState = MutableStateFlow(SignUiState())
     val uiState = _uiState.asStateFlow()
 
     private val _effects = Channel<SignUpEffect>(Channel.BUFFERED)
@@ -46,18 +48,30 @@ class SignUpViewModel @Inject constructor(
     fun onSubmit() {
         _uiState.update { curr -> curr.copy(isLoading = true) }
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val isSigned = signUp(
+        viewModelScope.launch {
+            val authProviderId = signUp(
                 Credentials(
                     email = _uiState.value.email,
                     password = _uiState.value.password
                 )
             )
 
-            if (isSigned) {
-                _effects.send(SignUpEffect.NavigateToHome)
-            } else {
-                _effects.send(SignUpEffect.Error)
+            if (authProviderId !== null) {
+                try {
+                    createUser(
+                        CreateUserProperties(
+                            email = _uiState.value.email,
+                            firstName = "Cesar App",
+                            lastName = "Hernandez App",
+                            authProviderId = authProviderId
+                        )
+                    )
+
+
+                    _effects.send(SignUpEffect.NavigateToHome)
+                } catch(_: Error) {
+                }
+
             }
 
             _uiState.update { curr -> curr.copy(isLoading = false) }

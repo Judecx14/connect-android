@@ -10,16 +10,18 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     val firebaseAuthDataSource: FirebaseAuth
 ) : AuthRepository {
-    override suspend fun signUp(credentials: Credentials): Boolean {
+    override suspend fun signUp(credentials: Credentials): String? {
         return try {
             val result = firebaseAuthDataSource.createUserWithEmailAndPassword(
                 credentials.email,
                 credentials.password
             ).await()
 
-            result != null
+            val user = result.user
+
+            user?.uid
         } catch (e: Exception) {
-            false
+            null
         }
     }
 
@@ -30,7 +32,7 @@ class AuthRepositoryImpl @Inject constructor(
                 credentials.password
             ).await()
 
-            result != null
+            result.user != null
         } catch (e: Exception) {
             false
         }

@@ -58,6 +58,9 @@ dependencies {
     implementation(libs.retrofit.converter)
     implementation(libs.kotlin.serialization.json)
 
+    // Serailization Error REMOVE
+    implementation(libs.androidx.annotation.experimental)
+
     // domain
     implementation(project(":domain"))
 }

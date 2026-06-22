@@ -5,7 +5,7 @@ import com.fenix.domain.repository.auth.AuthRepository
 import javax.inject.Inject
 
 class SignUp @Inject constructor(private val authRepository: AuthRepository) {
-    suspend operator fun invoke(credentials: Credentials) : Boolean {
+    suspend operator fun invoke(credentials: Credentials) : String? {
         val result = authRepository.signUp(credentials)
 
         return result
