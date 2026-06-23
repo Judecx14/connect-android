@@ -6,9 +6,9 @@ sealed interface FailureReason {
        data object GpsDisabled: Hardware()
     }
 
-    sealed class Api : FailureReason {
-       data object BadRequest : Api()
-       data object InternalServerError : Api()
+    sealed class Api(val code: Int) : FailureReason {
+       data object BadRequest : Api(404)
+       data object InternalServerError : Api(505)
     }
 
     data object Unknow : FailureReason
