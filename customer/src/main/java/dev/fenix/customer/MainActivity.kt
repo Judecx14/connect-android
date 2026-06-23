@@ -9,8 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.fenix.domain.model.auth.AuthState
 import dagger.hilt.android.AndroidEntryPoint
-import dev.fenix.customer.core.navigation.Navigator
-import dev.fenix.customer.core.navigation.Route
+import dev.fenix.customer.navigation.Navigator
+import dev.fenix.customer.navigation.Route
 import dev.fenix.ui.theme.ConnectTheme
 import kotlin.getValue
 

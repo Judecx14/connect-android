@@ -1,4 +1,4 @@
-package dev.fenix.customer.core.navigation
+package dev.fenix.customer.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation3.runtime.entryProvider
@@ -7,7 +7,7 @@ import androidx.navigation3.ui.NavDisplay
 import dev.fenix.customer.feature.auth.login.LoginScreen
 import dev.fenix.customer.feature.auth.signup.SignUpScreen
 import dev.fenix.ui.transition.ConnectTransition
-import dev.fenix.customer.core.navigation.Route.*
+import dev.fenix.customer.navigation.Route.*
 import dev.fenix.customer.feature.hub.HubScreen
 
 @Composable
