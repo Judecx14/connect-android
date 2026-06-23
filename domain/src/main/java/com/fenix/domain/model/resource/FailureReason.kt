@@ -1,16 +1,15 @@
 package com.fenix.domain.model.resource
 
 sealed interface FailureReason {
-    enum class Hardware : FailureReason {
-        NO_INTERNET,
+    sealed class Hardware : FailureReason {
+       data object NoInternet : Hardware()
+       data object GpsDisabled: Hardware()
     }
 
-    enum class Api : FailureReason {
-        BAD_REQUEST,
-        INTERNAL_SERVER_ERROR
+    sealed class Api : FailureReason {
+       data object BadRequest : Api()
+       data object InternalServerError : Api()
     }
 
-    enum class Unknow : FailureReason {
-        ANONYMOUS
-    }
+    data object Unknow : FailureReason
 }

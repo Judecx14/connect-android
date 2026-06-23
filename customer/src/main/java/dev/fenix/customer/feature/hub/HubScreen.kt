@@ -74,12 +74,13 @@ fun HubScreen(
             when (effect) {
                 HomeUiEffect.FailureLogout -> {}
                 HomeUiEffect.SuccessLogout -> navigateToLogin()
+                else -> {}
             }
         }
     }
 
     Content(
-        currentLocation = currentLocation,
+        currentLocation = currentLocation ?: "",
         logout = hubViewModel::doLogout
     )
 }

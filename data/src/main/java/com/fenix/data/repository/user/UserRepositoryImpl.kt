@@ -14,13 +14,13 @@ import javax.inject.Inject
 
 internal fun failureReasonMapper(throwable: Throwable): FailureReason {
     return when (throwable) {
-        is IOException -> FailureReason.Hardware.NO_INTERNET
+        is IOException -> FailureReason.Hardware.NoInternet
         is HttpException -> when (throwable.code()) {
-            404 -> FailureReason.Api.BAD_REQUEST
-            else -> FailureReason.Api.INTERNAL_SERVER_ERROR
+            404 -> FailureReason.Api.BadRequest
+            else -> FailureReason.Api.InternalServerError
         }
 
-        else -> FailureReason.Unknow.ANONYMOUS
+        else -> FailureReason.Unknow
     }
 }
 
