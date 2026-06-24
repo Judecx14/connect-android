@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.fenix.customer.common.ObserveFlowAsEvent
 import dev.fenix.customer.feature.auth.login.component.AuthBy
 import dev.fenix.customer.feature.auth.login.component.Form
 import dev.fenix.customer.feature.auth.login.component.Greeting
@@ -77,12 +78,12 @@ fun LoginScreen(
 ) {
     val uiState by loginViewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        loginViewModel.effects.collectLatest { effect ->
-            when (effect) {
-                LoginUiEffect.Error -> {}
-                LoginUiEffect.Success -> navigateToHome()
-            }
+    ObserveFlowAsEvent(
+        flow = loginViewModel.event,
+    ) { event ->
+        when (val resource = event) {
+            is LoginUiEvent.Error -> {  }
+            is LoginUiEvent.Success -> navigateToHome()
         }
     }
 

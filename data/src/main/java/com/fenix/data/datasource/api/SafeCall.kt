@@ -8,17 +8,18 @@ import retrofit2.HttpException
 internal fun failureReasonMapper(throwable: Throwable): FailureReason {
     return when (throwable) {
         is IOException -> FailureReason.Hardware.NoInternet
+
         is HttpException -> when (throwable.code()) {
             FailureReason.Api.BadRequest.code -> FailureReason.Api.BadRequest
             else -> FailureReason.Api.InternalServerError
         }
 
-        else -> FailureReason.Unknow
+        else -> FailureReason.Unknown
     }
 }
 
-suspend fun <R, T> safeApiCall(
-    call: suspend () -> R,
+internal inline fun <R, T> safeCall(
+    call: () -> R,
     onSuccess: (R) -> T,
     onFailure: (Throwable) -> FailureReason = { throwable -> failureReasonMapper(throwable) }
 ): Resource<T, FailureReason> {
@@ -29,3 +30,17 @@ suspend fun <R, T> safeApiCall(
         onFailure = { throwable -> Resource.Failure(onFailure(throwable)) }
     )
 }
+
+internal inline fun safeCall(
+    call: () -> Unit,
+    onFailure: (Throwable) -> FailureReason = { throwable -> failureReasonMapper(throwable) }
+): Resource<Unit, FailureReason> {
+    val result = runCatching { call() }
+
+    return result.fold(
+        onSuccess = { Resource.Success(Unit) },
+        onFailure = { throwable -> Resource.Failure(onFailure(throwable)) }
+    )
+}
+
+

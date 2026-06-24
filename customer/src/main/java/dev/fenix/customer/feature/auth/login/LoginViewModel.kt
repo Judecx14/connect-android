@@ -2,7 +2,8 @@ package dev.fenix.customer.feature.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fenix.domain.model.auth.Credentials
+import com.fenix.domain.model.auth.AuthCredentials
+import com.fenix.domain.model.resource.FailureReason
 import com.fenix.domain.use_case.auth.Login
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,9 +21,9 @@ data class LoginUiState(
     val isLoading: Boolean = false,
 )
 
-sealed class LoginUiEffect {
-    data object Success : LoginUiEffect()
-    data object Error : LoginUiEffect()
+sealed class LoginUiEvent {
+    data object Success : LoginUiEvent()
+    data class Error(val reason: FailureReason) : LoginUiEvent()
 }
 
 @HiltViewModel
@@ -32,8 +33,8 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _effects = Channel<LoginUiEffect>(Channel.BUFFERED)
-    val effects = _effects.receiveAsFlow()
+    private val _event = Channel<LoginUiEvent>(Channel.BUFFERED)
+    val event = _event.receiveAsFlow()
 
     fun onEmailChange(value: String) {
         _uiState.update { curr -> curr.copy(email = value) }
@@ -46,16 +47,16 @@ class LoginViewModel @Inject constructor(
     fun onSubmit() {
         viewModelScope.launch(context = Dispatchers.IO) {
             val isLogged = login(
-                Credentials(
+                AuthCredentials(
                     email = _uiState.value.email,
                     password = _uiState.value.password
                 )
             )
 
             if (isLogged) {
-                _effects.send(LoginUiEffect.Success)
+                _event.send(LoginUiEvent.Success)
             } else {
-                _effects.send(LoginUiEffect.Error)
+                _event.send(LoginUiEvent.Error)
             }
         }
     }

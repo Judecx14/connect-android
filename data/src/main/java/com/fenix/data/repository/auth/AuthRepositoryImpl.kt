@@ -1,7 +1,10 @@
 package com.fenix.data.repository.auth
 
+import com.fenix.data.datasource.api.safeCall
 import com.fenix.domain.model.auth.AuthState
-import com.fenix.domain.model.auth.Credentials
+import com.fenix.domain.model.auth.AuthCredentials
+import com.fenix.domain.model.resource.FailureReason
+import com.fenix.domain.model.resource.Resource
 import com.fenix.domain.repository.auth.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
@@ -10,50 +13,65 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     val firebaseAuthDataSource: FirebaseAuth
 ) : AuthRepository {
-    override suspend fun signUp(credentials: Credentials): String? {
-        return try {
-            val result = firebaseAuthDataSource.createUserWithEmailAndPassword(
-                credentials.email,
-                credentials.password
-            ).await()
-
-            val user = result.user
-
-            user?.uid
-        } catch (e: Exception) {
-            null
-        }
+    override suspend fun signUp(credentials: AuthCredentials): Resource<Unit, FailureReason> {
+        return safeCall(
+            call = {
+                firebaseAuthDataSource.createUserWithEmailAndPassword(
+                    credentials.email,
+                    credentials.password
+                ).await()
+            },
+        )
     }
 
-    override suspend fun login(credentials: Credentials): Boolean {
-        return try {
-            val result = firebaseAuthDataSource.signInWithEmailAndPassword(
-                credentials.email,
-                credentials.password
-            ).await()
-
-            result.user != null
-        } catch (e: Exception) {
-            false
-        }
+    override suspend fun login(credentials: AuthCredentials): Resource<Unit, FailureReason> {
+        return safeCall(
+            call = {
+                firebaseAuthDataSource.signInWithEmailAndPassword(
+                    credentials.email,
+                    credentials.password
+                ).await()
+            },
+        )
     }
 
-    override fun logout(): Boolean {
-        return try {
-            firebaseAuthDataSource.signOut()
-            true
-        } catch (e: Exception) {
-            false
-        }
+    override suspend fun getJwt(): Resource<String, FailureReason> {
+        return safeCall(
+            call = {
+                val result = firebaseAuthDataSource.getAccessToken(true).await()
+                val token = requireNotNull(result.token)
+                token
+            },
+            onSuccess = { token -> token }
+        )
     }
 
-    override fun currentAuthState(): AuthState {
-        val currentUser = firebaseAuthDataSource.currentUser
+    override fun logout(): Resource<Unit, FailureReason> {
+        return safeCall(
+            call = {
+                firebaseAuthDataSource.signOut()
+            }
+        )
+    }
 
-        return if (currentUser != null) {
-            AuthState.Authenticated
-        } else {
-            AuthState.Unauthenticated
-        }
+    override fun getAuthProviderId(): Resource<String, FailureReason> {
+        return safeCall(
+            call = {
+                val user = requireNotNull(firebaseAuthDataSource.currentUser)
+                user.uid
+            },
+            onSuccess = { uid -> uid }
+        )
+    }
+
+    override fun getAuthState(): Resource<AuthState, FailureReason> {
+        return safeCall(
+            call = {
+                firebaseAuthDataSource.currentUser
+            },
+            onSuccess = { currentUser ->
+                if (currentUser != null) AuthState.Authenticated else AuthState.Unauthenticated
+            }
+        )
     }
 }

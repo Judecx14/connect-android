@@ -2,7 +2,7 @@ package dev.fenix.customer.feature.auth.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fenix.domain.model.auth.Credentials
+import com.fenix.domain.model.auth.AuthCredentials
 import com.fenix.domain.model.user.CreateUserProperties
 import com.fenix.domain.use_case.auth.SignUp
 import com.fenix.domain.use_case.user.CreateUser
@@ -50,7 +50,7 @@ class SignUpViewModel @Inject constructor(
 
         viewModelScope.launch {
             val authProviderId = signUp(
-                Credentials(
+                AuthCredentials(
                     email = _uiState.value.email,
                     password = _uiState.value.password
                 )

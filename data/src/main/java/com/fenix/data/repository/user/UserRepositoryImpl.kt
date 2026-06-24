@@ -1,6 +1,6 @@
 package com.fenix.data.repository.user
 
-import com.fenix.data.datasource.api.safeApiCall
+import com.fenix.data.datasource.api.safeCall
 import com.fenix.data.datasource.api.user.UserApi
 import com.fenix.data.model.user.request.toRequest
 import com.fenix.data.model.user.response.toUser
@@ -18,7 +18,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun create(properties: CreateUserProperties): Resource<User, FailureReason> {
         val payloadRequest = properties.toRequest()
 
-        return safeApiCall(
+        return safeCall(
             call = { userApi.create(payloadRequest) },
             onSuccess = { response -> response.toUser() }
         )

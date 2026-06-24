@@ -8,16 +8,21 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun <T> ObserveAsEvent(
+fun <T> ObserveFlowAsEvent(
+    key: Any? = Unit,
     flow: Flow<T>,
     onEvent: (T) -> Unit,
-    key: Any? = Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(key) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            flow.collect { event -> onEvent(event)  }
+        lifecycleOwner.lifecycle.repeatOnLifecycle(
+            state = Lifecycle.State.STARTED
+        ) {
+            flow.collect {
+                event ->
+                onEvent(event)
+            }
         }
     }
 }

@@ -8,6 +8,6 @@ class CurrentAuthState @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     operator fun invoke() : AuthState {
-        return authRepository.currentAuthState()
+        return authRepository.getAuthState()
     }
 }

@@ -1,6 +1,6 @@
 package com.fenix.domain.model.auth
 
-data class Credentials(
+data class AuthCredentials(
     val email: String,
     val password: String,
 )
