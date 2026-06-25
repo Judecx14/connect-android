@@ -51,12 +51,12 @@ class HubViewModel @Inject constructor(
 
     fun doLogout() {
         viewModelScope.launch {
-            val event = logout().fold(
+            val onLogoutEvent = logout().fold(
                 onSuccess = { HomeUiEvent.SuccessLogout },
-                onFailure = { failureReason -> HomeUiEvent.FailureLogout(failureReason) }
+                onFailure = { reason -> HomeUiEvent.FailureLogout(reason) }
             )
 
-            _event.send(event)
+            _event.send(onLogoutEvent)
         }
     }
 
