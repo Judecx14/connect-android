@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.fenix.customer.common.ObserveFlowAsEvent
 import dev.fenix.customer.feature.hub.component.BottomBar
 import dev.fenix.customer.feature.hub.component.Categories
 import dev.fenix.customer.feature.hub.component.Orders
@@ -20,7 +20,6 @@ import dev.fenix.customer.feature.hub.component.TopBar
 import dev.fenix.ui.modifier.ambient_glow.ambientGlow
 import dev.fenix.ui.modifier.ambient_glow.model.Position
 import dev.fenix.ui.theme.ConnectTheme
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 private fun Content(
@@ -69,13 +68,13 @@ fun HubScreen(
 ) {
     val currentLocation by hubViewModel.location.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        hubViewModel.event.collectLatest { effect ->
-            when (effect) {
-                HomeUiEvent.FailureLogout -> {}
-                HomeUiEvent.SuccessLogout -> navigateToLogin()
-                else -> {}
-            }
+    ObserveFlowAsEvent(
+        flow = hubViewModel.event
+    ) { event ->
+        when (event) {
+            is HomeUiEvent.FailureLogout -> {}
+            is HomeUiEvent.SuccessLogout -> navigateToLogin()
+            is HomeUiEvent.FailureGetLocation -> {}
         }
     }
 
