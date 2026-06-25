@@ -6,5 +6,5 @@ data class Session(
     val authState: AuthState,
     val jwt: String,
     val authProviderId: String,
-    val user: User
+    val user: User?
 )

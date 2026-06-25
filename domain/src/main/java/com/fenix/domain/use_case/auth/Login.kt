@@ -27,7 +27,8 @@ class Login @Inject constructor(
             Session(
                 authState = authState,
                 jwt = jwt,
-                authProviderId = authProviderId
+                authProviderId = authProviderId,
+                user = null,
             )
         )
     }

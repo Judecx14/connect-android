@@ -56,7 +56,7 @@ class SignUpViewModel @Inject constructor(
                     lastName = "Hernandez",
                 )
             ).fold(
-                onSuccess = { session -> SignUpEvent.NavigateToHome },
+                onSuccess = { SignUpEvent.NavigateToHome },
                 onFailure = { reason -> SignUpEvent.Error(reason) }
             )
 
