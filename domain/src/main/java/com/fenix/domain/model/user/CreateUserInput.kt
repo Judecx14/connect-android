@@ -1,6 +1,6 @@
 package com.fenix.domain.model.user
 
-data class CreateUserProperties(
+data class CreateUserInput(
     val email : String,
     val firstName : String,
     val lastName : String,

@@ -19,8 +19,7 @@ fun <T> ObserveFlowAsEvent(
         lifecycleOwner.lifecycle.repeatOnLifecycle(
             state = Lifecycle.State.STARTED
         ) {
-            flow.collect {
-                event ->
+            flow.collect { event ->
                 onEvent(event)
             }
         }

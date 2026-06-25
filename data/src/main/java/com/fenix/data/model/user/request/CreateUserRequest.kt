@@ -1,6 +1,6 @@
 package com.fenix.data.model.user.request
 
-import com.fenix.domain.model.user.CreateUserProperties
+import com.fenix.domain.model.user.CreateUserInput
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -11,7 +11,7 @@ data class CreateUserRequest(
     val authProviderId: String
 )
 
-internal fun CreateUserProperties.toRequest() : CreateUserRequest {
+internal fun CreateUserInput.toRequest() : CreateUserRequest {
     return CreateUserRequest(
         email = this.email,
         firstName = this.firstName,

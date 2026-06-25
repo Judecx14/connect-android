@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fenix.customer.R
+import dev.fenix.customer.common.ObserveFlowAsEvent
 import dev.fenix.customer.feature.auth.signup.component.Form
 import dev.fenix.customer.feature.auth.signup.component.Header
 import dev.fenix.ui.component.app_bar.ConnectTopBar
@@ -72,11 +73,13 @@ fun SignUpScreen(
 ) {
     val uiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
-        signUpViewModel.effects.collectLatest { effect ->
-            when (effect) {
-                SignUpEffect.Error -> navigateToBack()
-                SignUpEffect.NavigateToHome -> navigateToHome()
+    ObserveFlowAsEvent(
+        flow = signUpViewModel.event
+    ) { event ->
+        when (event) {
+            is SignUpEvent.NavigateToHome -> navigateToHome()
+            is SignUpEvent.Error -> {
+                event.reason // TODO add snackbar
             }
         }
     }

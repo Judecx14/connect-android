@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +19,6 @@ import dev.fenix.customer.feature.auth.login.component.SignUpFooter
 import dev.fenix.ui.theme.ConnectTheme
 import dev.fenix.ui.modifier.ambient_glow.ambientGlow
 import dev.fenix.ui.modifier.ambient_glow.model.Position
-import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 private fun Content(
@@ -81,8 +79,11 @@ fun LoginScreen(
     ObserveFlowAsEvent(
         flow = loginViewModel.event,
     ) { event ->
-        when (val resource = event) {
-            is LoginUiEvent.Error -> {  }
+        when (event) {
+            is LoginUiEvent.Error -> {
+                event.reason
+            }
+
             is LoginUiEvent.Success -> navigateToHome()
         }
     }

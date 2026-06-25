@@ -2,10 +2,10 @@ package dev.fenix.customer.feature.auth.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fenix.domain.model.auth.AuthCredentials
-import com.fenix.domain.model.user.CreateUserProperties
+import com.fenix.domain.model.auth.SignUpInput
+import com.fenix.domain.model.resource.FailureReason
+import com.fenix.domain.model.resource.fold
 import com.fenix.domain.use_case.auth.SignUp
-import com.fenix.domain.use_case.user.CreateUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class SignUpEffect {
-    data object NavigateToHome : SignUpEffect()
-    data object Error : SignUpEffect()
+sealed class SignUpEvent {
+    data object NavigateToHome : SignUpEvent()
+    data class Error(val reason: FailureReason) : SignUpEvent()
 }
 
 data class SignUiState(
@@ -29,13 +29,12 @@ data class SignUiState(
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     val signUp: SignUp,
-    val createUser: CreateUser
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SignUiState())
     val uiState = _uiState.asStateFlow()
 
-    private val _effects = Channel<SignUpEffect>(Channel.BUFFERED)
-    val effects = _effects.receiveAsFlow()
+    private val _event = Channel<SignUpEvent>(Channel.BUFFERED)
+    val event = _event.receiveAsFlow()
 
     fun onEmailChange(value: String) {
         _uiState.update { curr -> curr.copy(email = value) }
@@ -49,30 +48,19 @@ class SignUpViewModel @Inject constructor(
         _uiState.update { curr -> curr.copy(isLoading = true) }
 
         viewModelScope.launch {
-            val authProviderId = signUp(
-                AuthCredentials(
+            val onSignUpEvent = signUp(
+                SignUpInput(
                     email = _uiState.value.email,
-                    password = _uiState.value.password
+                    password = _uiState.value.password,
+                    firstName = "Cesar",
+                    lastName = "Hernandez",
                 )
+            ).fold(
+                onSuccess = { session -> SignUpEvent.NavigateToHome },
+                onFailure = { reason -> SignUpEvent.Error(reason) }
             )
 
-            if (authProviderId !== null) {
-                try {
-                    createUser(
-                        CreateUserProperties(
-                            email = _uiState.value.email,
-                            firstName = "Cesar App",
-                            lastName = "Hernandez App",
-                            authProviderId = authProviderId
-                        )
-                    )
-
-
-                    _effects.send(SignUpEffect.NavigateToHome)
-                } catch(_: Error) {
-                }
-
-            }
+            _event.send(onSignUpEvent)
 
             _uiState.update { curr -> curr.copy(isLoading = false) }
         }

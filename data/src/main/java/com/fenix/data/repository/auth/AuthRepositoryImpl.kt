@@ -3,6 +3,7 @@ package com.fenix.data.repository.auth
 import com.fenix.data.datasource.api.safeCall
 import com.fenix.domain.model.auth.AuthState
 import com.fenix.domain.model.auth.AuthCredentials
+import com.fenix.domain.model.auth.SignUpInput
 import com.fenix.domain.model.resource.FailureReason
 import com.fenix.domain.model.resource.Resource
 import com.fenix.domain.repository.auth.AuthRepository
@@ -13,12 +14,12 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     val firebaseAuthDataSource: FirebaseAuth
 ) : AuthRepository {
-    override suspend fun signUp(credentials: AuthCredentials): Resource<Unit, FailureReason> {
+    override suspend fun signUp(input: SignUpInput): Resource<Unit, FailureReason> {
         return safeCall(
             call = {
                 firebaseAuthDataSource.createUserWithEmailAndPassword(
-                    credentials.email,
-                    credentials.password
+                    input.email,
+                    input.password
                 ).await()
             },
         )

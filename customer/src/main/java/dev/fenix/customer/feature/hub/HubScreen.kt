@@ -70,10 +70,10 @@ fun HubScreen(
     val currentLocation by hubViewModel.location.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        hubViewModel.effects.collectLatest { effect ->
+        hubViewModel.event.collectLatest { effect ->
             when (effect) {
-                HomeUiEffect.FailureLogout -> {}
-                HomeUiEffect.SuccessLogout -> navigateToLogin()
+                HomeUiEvent.FailureLogout -> {}
+                HomeUiEvent.SuccessLogout -> navigateToLogin()
                 else -> {}
             }
         }

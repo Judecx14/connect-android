@@ -3,10 +3,11 @@ package dev.fenix.customer.feature.auth.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fenix.domain.model.auth.AuthCredentials
+import com.fenix.domain.model.auth.AuthState
 import com.fenix.domain.model.resource.FailureReason
+import com.fenix.domain.model.resource.bind
 import com.fenix.domain.use_case.auth.Login
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -45,18 +46,19 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onSubmit() {
-        viewModelScope.launch(context = Dispatchers.IO) {
-            val isLogged = login(
+        viewModelScope.launch {
+            val session = login(
                 AuthCredentials(
                     email = _uiState.value.email,
                     password = _uiState.value.password
                 )
-            )
+            ).bind { failure ->
+                _event.send(LoginUiEvent.Error(failure.reason))
+                return@launch
+            }
 
-            if (isLogged) {
+            if (session.authState === AuthState.Authenticated) {
                 _event.send(LoginUiEvent.Success)
-            } else {
-                _event.send(LoginUiEvent.Error)
             }
         }
     }
