@@ -23,6 +23,6 @@ abstract class FormGroup {
      * Resets all controls in the group to their initial values.
      */
     fun reset() {
-        controls.forEach { it.reset() }
+        controls.forEach { control -> control.reset() }
     }
 }

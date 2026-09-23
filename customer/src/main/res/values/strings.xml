@@ -13,6 +13,8 @@
     <string name="login_screen_form_button_login">Iniciar sesion</string>
     <string name="login_screen_form_signup_footer_button">Registrarse</string>
     <string name="login_screen_form_signup_footer_question">¿No tienes cuenta?</string>
+    <string name="login_screen_form_error_empty">Este campo no puede estar vacío</string>
+    <string name="login_screen_form_error_invalid_email">Ingresa un correo electrónico válido</string>
 
     <!-- SignUp Screen -->
     <string name="signup_screen_top_bar_title">Crear una cuenta</string>

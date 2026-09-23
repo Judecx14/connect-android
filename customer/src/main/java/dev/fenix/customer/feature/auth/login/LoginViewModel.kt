@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import dev.fenix.customer.feature.auth.login.form.LoginForm
+
 data class LoginUiState(
-    val email: String = "",
-    val password: String = "",
     val isLoading: Boolean = false,
 )
 
@@ -28,7 +28,8 @@ sealed class LoginUiEvent {
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    val login: Login
+    val login: Login,
+    val form: LoginForm
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
@@ -36,20 +37,16 @@ class LoginViewModel @Inject constructor(
     private val _event = Channel<LoginUiEvent>(Channel.BUFFERED)
     val event = _event.receiveAsFlow()
 
-    fun onEmailChange(value: String) {
-        _uiState.update { curr -> curr.copy(email = value) }
-    }
-
-    fun onPasswordChange(value: String) {
-        _uiState.update { curr -> curr.copy(password = value) }
-    }
-
     fun onSubmit() {
+        if (!form.validate()) return
+        
         viewModelScope.launch {
+            _uiState.update { curr -> curr.copy(isLoading = true) }
+            
             val onLoginEvent = login(
                 AuthCredentials(
-                    email = _uiState.value.email,
-                    password = _uiState.value.password
+                    email = form.email.value,
+                    password = form.password.value
                 )
             ).fold(
                 onSuccess = { LoginUiEvent.Success },
@@ -57,6 +54,8 @@ class LoginViewModel @Inject constructor(
             )
 
             _event.send(onLoginEvent)
+            
+            _uiState.update { curr -> curr.copy(isLoading = false) }
         }
     }
 }

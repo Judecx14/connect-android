@@ -1,4 +1,4 @@
-package dev.fenix.customer.feature.auth.login.component
+package dev.fenix.customer.feature.auth.login.form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,13 +14,10 @@ import dev.fenix.ui.component.field.ConnectField
 import dev.fenix.ui.theme.ConnectTheme
 
 @Composable
-fun Form(
+fun LoginFormSection(
     modifier: Modifier = Modifier,
-    email: String,
-    password: String,
+    form: LoginForm,
     isLoading: Boolean = false,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
     onSubmit: () -> Unit
 ) {
 
@@ -29,20 +26,24 @@ fun Form(
         verticalArrangement = Arrangement.spacedBy(ConnectTheme.dimensions.spacing.medium)
     ) {
         ConnectField(
-            value = email,
-            onChange = onEmailChange,
+            value = form.email.value,
+            onChange = { form.email.onChange(it) },
             label = stringResource(R.string.login_screen_form_field_label_email),
             placeholder = stringResource(R.string.login_screen_form_field_placeholder_email),
             enabled = !isLoading,
+            hasError = form.email.error != null,
+            errorMessage = form.email.error?.asString()
         )
 
         ConnectField(
-            value = password,
-            onChange = onPasswordChange,
+            value = form.password.value,
+            onChange = { form.password.onChange(it) },
             label = stringResource(R.string.login_screen_form_field_label_password),
             placeholder = stringResource(R.string.login_screen_form_field_placeholder_password),
             visualTransformation = PasswordVisualTransformation(),
             enabled = !isLoading,
+            hasError = form.password.error != null,
+            errorMessage = form.password.error?.asString()
         )
 
         ConnectButton(
@@ -56,13 +57,10 @@ fun Form(
 
 @Preview(showBackground = true)
 @Composable
-private fun AuthByPreview() {
+private fun LoginFormSectionPreview() {
     ConnectTheme {
-        Form(
-            email = "",
-            password = "",
-            onEmailChange = {},
-            onPasswordChange = {},
+        LoginFormSection(
+            form = LoginForm(),
             onSubmit = {}
         )
     }

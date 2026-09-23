@@ -13,7 +13,8 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fenix.customer.common.ObserveFlowAsEvent
 import dev.fenix.customer.feature.auth.login.component.AuthBy
-import dev.fenix.customer.feature.auth.login.component.Form
+import dev.fenix.customer.feature.auth.login.form.LoginFormSection
+import dev.fenix.customer.feature.auth.login.form.LoginForm
 import dev.fenix.customer.feature.auth.login.component.Greeting
 import dev.fenix.customer.feature.auth.login.component.SignUpFooter
 import dev.fenix.ui.theme.ConnectTheme
@@ -23,8 +24,7 @@ import dev.fenix.ui.modifier.ambient_glow.model.Position
 @Composable
 private fun Content(
     uiState: LoginUiState,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
+    form: LoginForm,
     onSubmit: () -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
@@ -51,12 +51,9 @@ private fun Content(
                 modifier = Modifier.weight(0.4f)
             )
 
-            Form(
-                email = uiState.email,
-                password = uiState.password,
+            LoginFormSection(
+                form = form,
                 isLoading = uiState.isLoading,
-                onEmailChange = onEmailChange,
-                onPasswordChange = onPasswordChange,
                 onSubmit = onSubmit
             )
 
@@ -90,8 +87,7 @@ fun LoginScreen(
 
     Content(
         uiState = uiState,
-        onEmailChange = loginViewModel::onEmailChange,
-        onPasswordChange = loginViewModel::onPasswordChange,
+        form = loginViewModel.form,
         onSubmit = loginViewModel::onSubmit,
         navigateToSignUp = navigateToSignUp
     )
@@ -104,8 +100,7 @@ private fun LoginScreenPreview() {
     ConnectTheme {
         Content(
             uiState = LoginUiState(),
-            onEmailChange = { },
-            onPasswordChange = { },
+            form = LoginForm(),
             onSubmit = { },
             navigateToSignUp = { }
         )
