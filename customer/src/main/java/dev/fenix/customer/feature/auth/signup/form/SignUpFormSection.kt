@@ -1,4 +1,4 @@
-package dev.fenix.customer.feature.auth.signup.component
+package dev.fenix.customer.feature.auth.signup.form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,13 +14,10 @@ import dev.fenix.ui.component.field.ConnectField
 import dev.fenix.ui.theme.ConnectTheme
 
 @Composable
-fun Form(
+fun SignUpFormSection(
     modifier: Modifier = Modifier,
-    email: String,
-    password: String,
+    form: SignUpFormGroup,
     isLoading: Boolean = false,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
     onSubmit: () -> Unit,
 ) {
     Column(
@@ -31,17 +28,21 @@ fun Form(
             label = stringResource(R.string.signup_screen_form_field_label_email),
             placeholder = stringResource(R.string.signup_screen_form_field_placeholder_email),
             enabled = !isLoading,
-            value = email,
-            onChange = onEmailChange
+            value = form.email.value,
+            onChange = { form.email.onChange(it) },
+            hasError = form.email.error != null,
+            errorMessage = form.email.error?.asString()
         )
 
         ConnectField(
             label = stringResource(R.string.signup_screen_form_field_label_password),
             placeholder = stringResource(R.string.signup_screen_form_field_placeholder_password),
             enabled = !isLoading,
-            value = password,
-            onChange = onPasswordChange,
-            visualTransformation = PasswordVisualTransformation()
+            value = form.password.value,
+            onChange = { form.password.onChange(it) },
+            visualTransformation = PasswordVisualTransformation(),
+            hasError = form.password.error != null,
+            errorMessage = form.password.error?.asString()
         )
 
         ConnectButton(
@@ -56,11 +57,8 @@ fun Form(
 @Composable
 private fun HeaderPreview() {
     ConnectTheme {
-        Form(
-            email = "",
-            password = "",
-            onEmailChange = {},
-            onPasswordChange = {},
+        SignUpFormSection(
+            form = SignUpFormGroup(),
             onSubmit = {}
         )
     }

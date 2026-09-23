@@ -25,6 +25,8 @@ fun ConnectField(
     enabled: Boolean = true,
     leading: @Composable ((color: Color) -> Unit)? = null,
     trailing: @Composable ((color: Color) -> Unit)? = null,
+    hasError: Boolean = false,
+    errorMessage: String? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onChange: (String) -> Unit,
 ) {
@@ -61,6 +63,7 @@ fun ConnectField(
                     singleLine = true,
                     visualTransformation = visualTransformation,
                     interactionSource = interactionSource,
+                    isError = hasError,
 
                     placeholder = placeholder?.let { text ->
                         { ConnectText(text = text) }
@@ -84,6 +87,13 @@ fun ConnectField(
 
             enabled = enabled,
         )
+
+        if (hasError && errorMessage != null) {
+            ConnectText(
+                text = errorMessage,
+                color = ConnectTheme.colors.error, 
+            )
+        }
     }
 }
 
@@ -100,6 +110,12 @@ private fun ConnectFieldPreview() {
                 label = "Password",
                 value = "password",
                 visualTransformation = PasswordVisualTransformation()
+            ) {}
+
+            ConnectField(
+                value = "", placeholder = "Error",
+                hasError = true,
+                errorMessage = "This is a error!"
             ) {}
         }
     }

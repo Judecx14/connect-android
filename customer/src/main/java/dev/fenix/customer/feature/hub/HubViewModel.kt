@@ -30,9 +30,8 @@ class HubViewModel @Inject constructor(
     currentLocation: CurrentLocation, private val logout: Logout
 ) : ViewModel() {
     private val _event = Channel<HomeUiEvent>(Channel.BUFFERED)
-    val event = _event.receiveAsFlow(
+    val event = _event.receiveAsFlow()
 
-    )
     val location: StateFlow<String?> = currentLocation()
         .onEach { resource ->
             resource.onFail { failure ->

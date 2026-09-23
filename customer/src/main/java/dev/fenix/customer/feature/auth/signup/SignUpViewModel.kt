@@ -7,6 +7,7 @@ import com.fenix.domain.model.resource.FailureReason
 import com.fenix.domain.model.resource.fold
 import com.fenix.domain.use_case.auth.SignUp
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.fenix.customer.feature.auth.signup.form.SignUpFormGroup
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,37 +22,31 @@ sealed class SignUpEvent {
 }
 
 data class SignUiState(
-    val email: String = "",
-    val password: String = "",
     val isLoading: Boolean = false,
 )
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     val signUp: SignUp,
+    val form: SignUpFormGroup
 ) : ViewModel() {
+
     private val _uiState = MutableStateFlow(SignUiState())
     val uiState = _uiState.asStateFlow()
 
     private val _event = Channel<SignUpEvent>(Channel.BUFFERED)
     val event = _event.receiveAsFlow()
 
-    fun onEmailChange(value: String) {
-        _uiState.update { curr -> curr.copy(email = value) }
-    }
-
-    fun onPasswordChange(value: String) {
-        _uiState.update { curr -> curr.copy(password = value) }
-    }
-
     fun onSubmit() {
+        if (!form.validate()) return
+
         _uiState.update { curr -> curr.copy(isLoading = true) }
 
         viewModelScope.launch {
             val onSignUpEvent = signUp(
                 SignUpInput(
-                    email = _uiState.value.email,
-                    password = _uiState.value.password,
+                    email = form.email.value,
+                    password = form.password.value,
                     firstName = "Cesar",
                     lastName = "Hernandez",
                 )

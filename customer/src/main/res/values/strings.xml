@@ -23,4 +23,7 @@
     <string name="signup_screen_form_field_label_password">Contrasena</string>
     <string name="signup_screen_form_field_placeholder_password">Escribe tu contrasena</string>
     <string name="signup_screen_form_button_signup">Registrarse</string>
+    <string name="signup_screen_form_error_empty">Este campo no puede estar vacío</string>
+    <string name="signup_screen_form_error_invalid_email">Ingresa un correo electrónico válido</string>
+    <string name="signup_screen_form_error_password_short">La contraseña debe tener al menos 6 caracteres</string>
 </resources>
