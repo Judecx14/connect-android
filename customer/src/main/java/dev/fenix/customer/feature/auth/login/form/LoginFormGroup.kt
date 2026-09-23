@@ -5,7 +5,7 @@ import dev.fenix.ui.core.form.FormControl
 import dev.fenix.ui.core.form.FormGroup
 import javax.inject.Inject
 
-class LoginForm @Inject constructor() : FormGroup() {
+class LoginFormGroup @Inject constructor() : FormGroup() {
 
     val email = FormControl(
         initialValue = "",

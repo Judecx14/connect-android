@@ -14,7 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.fenix.customer.common.ObserveFlowAsEvent
 import dev.fenix.customer.feature.auth.login.component.AuthBy
 import dev.fenix.customer.feature.auth.login.form.LoginFormSection
-import dev.fenix.customer.feature.auth.login.form.LoginForm
+import dev.fenix.customer.feature.auth.login.form.LoginFormGroup
 import dev.fenix.customer.feature.auth.login.component.Greeting
 import dev.fenix.customer.feature.auth.login.component.SignUpFooter
 import dev.fenix.ui.theme.ConnectTheme
@@ -24,7 +24,7 @@ import dev.fenix.ui.modifier.ambient_glow.model.Position
 @Composable
 private fun Content(
     uiState: LoginUiState,
-    form: LoginForm,
+    form: LoginFormGroup,
     onSubmit: () -> Unit,
     navigateToSignUp: () -> Unit,
 ) {
@@ -100,7 +100,7 @@ private fun LoginScreenPreview() {
     ConnectTheme {
         Content(
             uiState = LoginUiState(),
-            form = LoginForm(),
+            form = LoginFormGroup(),
             onSubmit = { },
             navigateToSignUp = { }
         )

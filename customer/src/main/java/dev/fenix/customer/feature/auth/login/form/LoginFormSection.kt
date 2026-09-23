@@ -16,7 +16,7 @@ import dev.fenix.ui.theme.ConnectTheme
 @Composable
 fun LoginFormSection(
     modifier: Modifier = Modifier,
-    form: LoginForm,
+    form: LoginFormGroup,
     isLoading: Boolean = false,
     onSubmit: () -> Unit
 ) {
@@ -60,7 +60,7 @@ fun LoginFormSection(
 private fun LoginFormSectionPreview() {
     ConnectTheme {
         LoginFormSection(
-            form = LoginForm(),
+            form = LoginFormGroup(),
             onSubmit = {}
         )
     }

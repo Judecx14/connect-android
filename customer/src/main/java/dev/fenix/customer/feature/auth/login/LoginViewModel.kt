@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-import dev.fenix.customer.feature.auth.login.form.LoginForm
+import dev.fenix.customer.feature.auth.login.form.LoginFormGroup
 
 data class LoginUiState(
     val isLoading: Boolean = false,
@@ -29,7 +29,7 @@ sealed class LoginUiEvent {
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     val login: Login,
-    val form: LoginForm
+    val form: LoginFormGroup
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
