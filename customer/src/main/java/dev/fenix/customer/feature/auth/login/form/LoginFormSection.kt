@@ -55,8 +55,7 @@ fun LoginFormSection(
             leading = if (isLoading) {
                 { color ->
                     CircularProgressIndicator(
-                        modifier = Modifier.size(ConnectTheme.dimensions.icon.large),
-                        color = color
+                        color = color,
                     )
                 }
             } else null

@@ -25,6 +25,9 @@ import dev.fenix.ui.core.type.Emphasis
 import dev.fenix.ui.component.button.type.Variant
 
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.width
+
 @Composable
 private fun ConnectButtonContent(
     modifier: Modifier = Modifier,
@@ -34,20 +37,34 @@ private fun ConnectButtonContent(
     color: Color
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(0.65f),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        leading?.invoke()
+        Box(
+            modifier = Modifier.width(ConnectTheme.dimensions.icon.large),
+            contentAlignment = Alignment.Center
+        ) {
+            leading?.invoke()
+        }
 
         ConnectText(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = ConnectTheme.dimensions.spacing.small),
             text = label,
             align = TextAlign.Center,
             style = ConnectTextStyle.Label,
-            color = color
+            color = color,
+            maxLines = 1
         )
 
-        trailing?.invoke()
+        Box(
+            modifier = Modifier.width(ConnectTheme.dimensions.icon.large),
+            contentAlignment = Alignment.Center
+        ) {
+            trailing?.invoke()
+        }
     }
 }
 
