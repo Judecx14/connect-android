@@ -19,6 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import dev.fenix.ui.theme.ConnectTheme
 import dev.fenix.ui.component.button.colors.buildButtonColors
+import dev.fenix.ui.component.text.ConnectText
+import dev.fenix.ui.component.text.type.ConnectTextStyle
 import dev.fenix.ui.core.type.Emphasis
 import dev.fenix.ui.component.button.type.Variant
 
@@ -37,12 +39,11 @@ private fun ConnectButtonContent(
     ) {
         leading?.invoke()
 
-        // TODO: Change by our button text
-        Text(
+        ConnectText(
             modifier = Modifier.weight(1f),
             text = label,
-            textAlign = TextAlign.Center,
-            style = ConnectTheme.typography.labelLarge,
+            align = TextAlign.Center,
+            style = ConnectTextStyle.Label,
             color = color
         )
 

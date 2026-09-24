@@ -39,7 +39,10 @@ internal inline fun safeCall(
 
     return result.fold(
         onSuccess = { Resource.Success(Unit) },
-        onFailure = { throwable -> Resource.Failure(onFailure(throwable)) }
+        onFailure = { throwable ->
+            val failureReason = onFailure(throwable)
+            Resource.Failure(failureReason)
+        }
     )
 }
 

@@ -1,7 +1,10 @@
 package dev.fenix.customer.feature.auth.signup
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -22,11 +25,19 @@ import dev.fenix.ui.component.button.type.Variant
 import dev.fenix.ui.component.icon.ConnectIcon
 import dev.fenix.ui.component.icon.type.ConnectIcons
 import dev.fenix.ui.theme.ConnectTheme
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
+import dev.fenix.customer.common.asString
 
 @Composable
 private fun Content(
     uiState: SignUiState,
     form: SignUpFormGroup,
+    snackbarHostState: SnackbarHostState,
     onSubmit: () -> Unit,
     navigateToBack: () -> Unit
 ) {
@@ -43,12 +54,15 @@ private fun Content(
                     }
                 }
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
-                .fillMaxWidth()
+                .imePadding()
+                .verticalScroll(rememberScrollState())
         ) {
             Header()
             SignUpFormSection(
@@ -67,6 +81,9 @@ fun SignUpScreen(
     navigateToHome: () -> Unit,
 ) {
     val uiState by signUpViewModel.uiState.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     ObserveFlowAsEvent(
         flow = signUpViewModel.event
@@ -74,7 +91,10 @@ fun SignUpScreen(
         when (event) {
             is SignUpEvent.NavigateToHome -> navigateToHome()
             is SignUpEvent.Error -> {
-                event.reason
+                val errorMessage = event.reason.asString(context)
+                scope.launch {
+                    snackbarHostState.showSnackbar(message = errorMessage)
+                }
             }
         }
     }
@@ -82,6 +102,7 @@ fun SignUpScreen(
     Content(
         uiState = uiState,
         form = signUpViewModel.form,
+        snackbarHostState = snackbarHostState,
         onSubmit = signUpViewModel::onSubmit,
         navigateToBack = navigateToBack
     )
@@ -95,6 +116,7 @@ private fun SignUpScreenPreview() {
         Content(
             uiState = SignUiState(),
             form = SignUpFormGroup(),
+            snackbarHostState = SnackbarHostState(),
             navigateToBack = {},
             onSubmit = {}
         )

@@ -37,34 +37,43 @@ object Colors {
     }
 
     object Dark {
-        val primary = Color(0xFF96424D)
-        val onPrimary = Color(0xFF670022)
-        val primaryContainer = Color(0xFFFF4F77)
-        val onPrimaryContainer = Color(0xFF3A0010)
+        val primary = Color(0xFFE30C52) // Se mantiene el acento brillante
+        val onPrimary = Color(0xFFFFFFFF)
+        val primaryContainer = Color(0xFF8F0031)
+        val onPrimaryContainer = Color(0xFFFFD9E2)
+        
         val secondary = Color(0xFFFFB2BC)
         val onSecondary = Color(0xFF670022)
         val secondaryContainer = Color(0xFF522B35)
         val onSecondaryContainer = Color(0xFFFF9CAA)
+        
         val tertiary = Color(0xFFFFB695)
         val onTertiary = Color(0xFF571E00)
-        val tertiaryContainer = Color(0xFFF06717)
-        val onTertiaryContainer = Color(0xFF310E00)
+        val tertiaryContainer = Color(0xFF7B2F00)
+        val onTertiaryContainer = Color(0xFFFFDBCF)
+        
         val error = Color(0xFFFFB4AB)
         val errorContainer = Color(0xFF93000A)
         val onError = Color(0xFF690005)
         val onErrorContainer = Color(0xFFFFDAD6)
-        val background = Color(0xFF170B0C)
-        val onBackground = Color(0xFFFBDBDD)
-        val surface = Color(0xFF1F0F11)
-        val onSurface = Color(0xFFFBDBDD)
-        val surfaceVariant = Color(0xFF5C3F43)
-        val onSurfaceVariant = Color(0xFFE5BCC0)
-        val outline = Color(0xFFAC878B)
-        val inverseOnSurface = Color(0xFF3F2B2D)
-        val inverseSurface = Color(0xFFFBDBDD)
-        val inversePrimary = Color(0xFFBD0046)
-        val surfaceTint = Color(0xFFFFB2BC)
-        val outlineVariant = Color(0xFF5C3F43)
+        
+        val background = Color(0xFF15151A) // Un gris-azulado muy oscuro (estilo Discord)
+        val onBackground = Color(0xFFE4E1E6)
+        
+        val surface = Color(0xFF1C1B20) // Tarjetas ligeramente más claras que el fondo
+        val onSurface = Color(0xFFE4E1E6)
+        
+        val surfaceVariant = Color(0xFF4A454E)
+        val onSurfaceVariant = Color(0xFFCCC4CF)
+        
+        val outline = Color(0xFF958E99)
+        val outlineVariant = Color(0xFF4A454E)
+        
+        val inverseOnSurface = Color(0xFF15151A)
+        val inverseSurface = Color(0xFFE4E1E6)
+        val inversePrimary = Color(0xFFE30C52)
+        
+        val surfaceTint = Color(0xFFE30C52)
         val scrim = Color(0xFF000000)
     }
 }

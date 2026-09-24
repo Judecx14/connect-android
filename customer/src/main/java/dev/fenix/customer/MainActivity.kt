@@ -13,15 +13,19 @@ import dev.fenix.customer.navigation.Navigator
 import dev.fenix.customer.navigation.Route
 import dev.fenix.ui.theme.ConnectTheme
 import kotlin.getValue
+import androidx.activity.SystemBarStyle
+import android.graphics.Color
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
 
     private fun setupUi() {
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+        )
         setContent {
-            ConnectTheme(darkTheme = false) {
+            ConnectTheme {
                 val authState by mainViewModel.authState.collectAsStateWithLifecycle()
 
                 when (authState) {

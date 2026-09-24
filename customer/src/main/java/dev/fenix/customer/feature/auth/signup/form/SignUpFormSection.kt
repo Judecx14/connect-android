@@ -12,6 +12,8 @@ import dev.fenix.customer.R
 import dev.fenix.ui.component.button.ConnectButton
 import dev.fenix.ui.component.field.ConnectField
 import dev.fenix.ui.theme.ConnectTheme
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.size
 
 @Composable
 fun SignUpFormSection(
@@ -49,6 +51,15 @@ fun SignUpFormSection(
             label = stringResource(R.string.signup_screen_form_button_signup),
             enabled = !isLoading,
             onClick = onSubmit,
+            leading = if (isLoading) {
+                { color ->
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(ConnectTheme.dimensions.icon.small),
+                        color = color,
+                        strokeWidth = ConnectTheme.dimensions.border.small
+                    )
+                }
+            } else null
         )
     }
 }

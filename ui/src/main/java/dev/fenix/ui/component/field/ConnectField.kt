@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import dev.fenix.ui.theme.ConnectTheme
 import dev.fenix.ui.component.text.ConnectText
+import androidx.compose.ui.graphics.SolidColor
 
 @Composable
 fun ConnectField(
@@ -53,6 +54,8 @@ fun ConnectField(
             modifier = Modifier.fillMaxWidth(),
             interactionSource = interactionSource,
             visualTransformation = visualTransformation,
+            textStyle = ConnectTheme.typography.bodyLarge.copy(color = ConnectTheme.colors.onSurface),
+            cursorBrush = SolidColor(ConnectTheme.colors.primary),
 
             value = value,
             onValueChange = { change -> onChange(change) },

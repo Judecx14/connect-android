@@ -21,6 +21,7 @@ fun Greeting(modifier: Modifier = Modifier) {
         modifier = modifier.padding(
             start = ConnectTheme.dimensions.padding.medium,
             end = ConnectTheme.dimensions.padding.medium,
+            bottom = ConnectTheme.dimensions.padding.normal
         ),
         verticalArrangement = Arrangement.Bottom,
     ) {
