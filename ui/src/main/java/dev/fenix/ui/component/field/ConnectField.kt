@@ -3,7 +3,9 @@ package dev.fenix.ui.component.field
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -89,10 +91,14 @@ fun ConnectField(
         )
 
         if (hasError && errorMessage != null) {
-            ConnectText(
-                text = errorMessage,
-                color = ConnectTheme.colors.error, 
-            )
+            Row(
+                modifier = modifier.padding(horizontal = ConnectTheme.dimensions.padding.normal)
+            ) {
+                ConnectText(
+                    text = errorMessage,
+                    color = ConnectTheme.colors.error,
+                )
+            }
         }
     }
 }

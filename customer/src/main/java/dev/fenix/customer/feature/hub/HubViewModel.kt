@@ -27,7 +27,8 @@ sealed class HomeUiEvent {
 
 @HiltViewModel
 class HubViewModel @Inject constructor(
-    currentLocation: CurrentLocation, private val logout: Logout
+    currentLocation: CurrentLocation,
+    private val logout: Logout
 ) : ViewModel() {
     private val _event = Channel<HomeUiEvent>(Channel.BUFFERED)
     val event = _event.receiveAsFlow()

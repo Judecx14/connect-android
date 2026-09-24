@@ -13,8 +13,8 @@
     <string name="login_screen_form_button_login">Iniciar sesion</string>
     <string name="login_screen_form_signup_footer_button">Registrarse</string>
     <string name="login_screen_form_signup_footer_question">¿No tienes cuenta?</string>
-    <string name="login_screen_form_error_empty">Este campo no puede estar vacío</string>
-    <string name="login_screen_form_error_invalid_email">Ingresa un correo electrónico válido</string>
+    <string name="login_screen_form_error_empty">* Este campo no puede estar vacío</string>
+    <string name="login_screen_form_error_invalid_email">* Ingresa un correo electrónico válido</string>
 
     <!-- SignUp Screen -->
     <string name="signup_screen_top_bar_title">Crear una cuenta</string>
@@ -25,7 +25,7 @@
     <string name="signup_screen_form_field_label_password">Contrasena</string>
     <string name="signup_screen_form_field_placeholder_password">Escribe tu contrasena</string>
     <string name="signup_screen_form_button_signup">Registrarse</string>
-    <string name="signup_screen_form_error_empty">Este campo no puede estar vacío</string>
-    <string name="signup_screen_form_error_invalid_email">Ingresa un correo electrónico válido</string>
-    <string name="signup_screen_form_error_password_short">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="signup_screen_form_error_empty">* Este campo no puede estar vacío</string>
+    <string name="signup_screen_form_error_invalid_email">* Ingresa un correo electrónico válido</string>
+    <string name="signup_screen_form_error_password_short">* La contraseña debe tener al menos 6 caracteres</string>
 </resources>
