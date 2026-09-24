@@ -54,9 +54,8 @@ fun SignUpFormSection(
             leading = if (isLoading) {
                 { color ->
                     CircularProgressIndicator(
-                        modifier = Modifier.size(ConnectTheme.dimensions.icon.small),
-                        color = color,
-                        strokeWidth = ConnectTheme.dimensions.border.small
+                        modifier = Modifier.size(ConnectTheme.dimensions.icon.large),
+                        color = color
                     )
                 }
             } else null
@@ -70,6 +69,7 @@ private fun HeaderPreview() {
     ConnectTheme {
         SignUpFormSection(
             form = SignUpFormGroup(),
+            isLoading = true,
             onSubmit = {}
         )
     }

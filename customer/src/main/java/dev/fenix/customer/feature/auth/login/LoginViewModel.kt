@@ -48,7 +48,10 @@ class LoginViewModel @Inject constructor(
                     password = form.password.value
                 )
             ).fold(
-                onSuccess = { LoginUiEvent.Success },
+                onSuccess = { 
+                    form.reset()
+                    LoginUiEvent.Success 
+                },
                 onFailure = { reason -> LoginUiEvent.Error(reason) }
             )
 

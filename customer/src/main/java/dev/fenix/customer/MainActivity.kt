@@ -20,10 +20,16 @@ import android.graphics.Color
 class MainActivity : ComponentActivity() {
     private val mainViewModel: MainViewModel by viewModels()
 
-    private fun setupUi() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+            statusBarStyle = SystemBarStyle.auto(
+                Color.TRANSPARENT,
+                Color.TRANSPARENT
+            )
         )
+
         setContent {
             ConnectTheme {
                 val authState by mainViewModel.authState.collectAsStateWithLifecycle()
@@ -34,11 +40,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setupUi()
     }
 }
